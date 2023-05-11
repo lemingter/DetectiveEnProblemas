@@ -1,5 +1,6 @@
 #include "Item.h"
 
+#include "DetectiveEnProblemasGameMode.h"
 #include "MeshAttributes.h"
 #include "Components/BoxComponent.h"
 #include "Engine/Engine.h"
@@ -12,7 +13,7 @@ AItem::AItem()
 	PrimaryActorTick.bCanEverTick = true;
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
-	CollisionBox->SetBoxExtent(FVector(32.0f,32.0f,32.0f));
+	CollisionBox->SetBoxExtent(FVector(35.0f,35.0f,35.0f));
 	CollisionBox->SetCollisionProfileName("Trigger");
 	RootComponent = CollisionBox;
 	SuperMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MyMesh"));
@@ -41,7 +42,11 @@ void AItem::Tick(float DeltaTime)
 
 void AItem::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1,1.f,FColor::Yellow, "OverlapBeginFunctionCalled");
+	ADetectiveEnProblemasGameMode* MyGameMode = Cast<ADetectiveEnProblemasGameMode>(GetWorld()->GetAuthGameMode());
+	if (MyGameMode != nullptr)
+	{
+		MyGameMode->Counter ++;
+	}
 
 	this->Destroy();
 }
