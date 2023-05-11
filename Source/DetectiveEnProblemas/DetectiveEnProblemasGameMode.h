@@ -13,6 +13,8 @@ class ADetectiveEnProblemasGameMode : public AGameModeBase
 
 public:
 	ADetectiveEnProblemasGameMode();
+	UPROPERTY(EditAnywhere,BlueprintReadWrite);
+	int Counter;
 };
 
 
